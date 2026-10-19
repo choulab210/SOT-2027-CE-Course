@@ -21,13 +21,15 @@ Baseline: `edbb5ce0a4889f9807c75f1b068ec1495d61b3a4`, retained in Git history.
 | Existing source/figures/results | PASS | No changes to src/, figures/, results/, data/, requirements, URLs or checksums |
 | Slide-code alignment | PASS | Teaching code cells are now 11, 14, 17, 20 and 23; stable cell IDs retained |
 | Actual Google Colab execution | NOT TESTED | Browser is signed out; authenticated runtime unavailable |
-| Default collapsed helper display in Colab | NOT TESTED | Form metadata and title comment added; public-page browser check follows publication |
+| Default collapsed helper display in Colab | PASS | Published notebook opened in Google Colab; helper cell displayed its title and Show code buttons with the source hidden, without manually hiding it |
 
 **Execution scope:** eight notebook code cells ran sequentially from beginning to end in a fresh Windows 11 local environment. A ninth, verification-only cell checked final epoch/loss/parameters; it is not part of the published notebook. No scientific package was installed before notebook execution. The notebook's own installation cell ran, with package caching disabled and no cached dataset/checkpoint available. No manual file upload or Drive mount was used.
 
 **Tested versions:** Python 3.13.3; PyTorch 2.13.0; NumPy 2.4.6; pandas 2.3.3; scikit-learn 1.9.0; matplotlib 3.11.1. Harness: nbformat 5.11.1, nbclient 0.11.0, ipykernel 7.4.0. CPU, deterministic algorithms, seed 42. Live Colab numerical execution remains unverified; local execution is not represented as a Google runtime test.
 
 **Recalculated AUCs:** RF training 0.998730 / test 0.800000; scratch training 0.942857 / test 0.773333; TL training 0.895238 / test 0.866667. These values were calculated from probabilities and compared to the published CSV, not hard-coded into analysis. Balanced accuracy and MCC also agree. No collapsed classifications or constant probabilities occurred.
+
+**Browser presentation check:** The public Colab page rendered both Part 0 and Part 1, all three setup subsections, and the supporting-functions form in hidden-code mode. This verifies the actual Colab presentation, not execution on a Google runtime.
 
 **Warnings:** Jupyter emitted a local TCP transport warning and a kernel parent-exit shutdown warning. Neither caused a cell error. No execution failures or unresolved numerical discrepancies occurred in this update. Google sign-in is required for a live Colab runtime and local notebook upload, so those were not attempted past the sign-in prompt. Default hiding in other notebook viewers is not guaranteed.
 
