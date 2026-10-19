@@ -1,5 +1,55 @@
 # Verification report
 
+## Colab environment fix — 2026-10-18
+
+Baseline: `e7c4bf559e4162a7d7f9132086a61588224db2e1`. Part 0.1 now validates existing imports and required operations without invoking pip. A version difference from the local pins does not trigger installation. Import/API failures stop with explicit recovery and runtime-restart instructions. The original pinned requirements and reference results are unchanged. Earlier installation claims below describe earlier notebook revisions, not this revision.
+
+### Execution scope and checks
+
+Two local CPU runs executed all eight notebook code cells sequentially in fresh kernels and empty working directories. The reference run used the existing pinned environment; the alternate run used a newly created virtual environment without inherited packages, installed from scratch with pip caching disabled **before** starting its kernel. Both used Python 3.13.3 on Windows 11. Neither run is an execution on Google's Colab service. The alternate stack tests version flexibility; it is not claimed to duplicate Colab's current default stack.
+
+| Package | Reference environment | Fresh alternate environment |
+|---|---|---|
+| PyTorch | 2.13.0 | 2.7.1 |
+| NumPy | 2.4.6 | 2.2.6 |
+| pandas | 2.3.3 | 2.2.3 |
+| scikit-learn | 1.9.0 | 1.6.1 |
+| matplotlib | 3.11.1 | 3.10.3 |
+
+| Requested check | Result in both environments |
+|---|---|
+| Dependency imports and operations | PASS; installed versions unchanged by execution |
+| Dataset download | PASS; new download, unchanged frozen URL and SHA-256; N=100, train=80, test=20 |
+| Checkpoint download | PASS; new download, unchanged frozen URL and SHA-256 |
+| Strict loading | PASS; all eight checkpoint tensors checked and loaded strictly |
+| Frozen layers | PASS; 34,944 frozen / 6,241 trainable; optimizer only contains trainable head parameters |
+| Fine-tuning | PASS; 50 epochs; frozen shared tensors bitwise unchanged; all four head tensors updated; finite loss and predictions |
+| Evaluation | PASS; AUC, balanced accuracy and MCC independently recalculated from all 300 probabilities |
+| Figures | PASS; six decoded 4800×2700 PNGs and six parsed SVGs; ROC coordinates/areas and bar values checked against calculated metrics |
+| Failure-path regression tests | PASS; five tests in each environment cover healthy imports, missing package, reported NumPy import error, loaded/installed version mismatch and missing required PyTorch API |
+| Notebook schema and scientific preservation | PASS; 25 cells and eight code cells; seven scientific code cells byte-identical to baseline; positions, IDs, helper-collapse metadata, source modules, requirements and existing figures/results unchanged |
+| Live Google Colab CPU execution | NOT TESTED; available browser signed out, no authenticated Google runtime |
+
+The new environment also passed `pip check`. Tests use nbformat 5.11.1, nbclient 0.11.0 and ipykernel 7.4.0. An additional verification-only cell checked epoch count, finiteness and frozen/head tensors; it is not included in the published notebook.
+
+### Numerical comparison and investigation
+
+| Model | Reference test AUC | Alternate test AUC | Maximum absolute probability difference, train / test |
+|---|---|---|---|
+| Random Forest | 0.800000 | 0.800000 | 0 / 0 |
+| Scratch DNN | 0.773333 | 0.786667 | 0.0782160 / 0.0814255 |
+| Transfer Learning | 0.866667 | 0.866667 | 1.19209e-7 / 5.96046e-8 |
+
+The reference environment reproduced all 300 saved probabilities exactly. The alternate environment did **not** reproduce exact scratch probabilities: scratch training AUC also changed from 0.942857 to 0.940952. All models' classifications, balanced accuracy and MCC remained unchanged on both partitions. Mean absolute scratch probability differences were 0.00991365 (train) and 0.01349865 (test). These are measured results, not values substituted into the analysis.
+
+A diagnostic replay using the unchanged reusable model/training functions compared the two environments. Preprocessed arrays, labels, splits, initial parameter tensors, all 50 epoch batch orders and initial forward predictions matched exactly. The first optimizer update produced a maximum parameter difference of 3.72529e-9. Final scratch loss was 0.371316 versus 0.368471 and maximum final parameter difference was 0.204467; replayed probability differences matched the notebook runs. This localizes the divergence to numerical training behavior with different PyTorch builds, rather than sampling, initialization or evaluation changes. It does not identify a particular backend kernel as the cause. Deterministic settings within an environment do not establish bitwise equality across versions. No method, seed, hyperparameter or dependency was tuned to recover the reference AUC. The 20-observation test set contains 75 positive-negative pairs; the AUC change of 0.013333 equals one pair's contribution.
+
+The published historical CSVs and figures remain intact. Future compatible Colab versions may yield different probabilities or metrics; successful imports are not a guarantee of exact numerical reproduction. Use the original local pins for the reference environment. No source-model pretraining was performed.
+
+**Audit notes:** An initial local harness typo failed before notebook execution and was corrected in a separate harness file. Both completed notebook runs had no cell failures. Local Jupyter TCP/shutdown warnings and matplotlib/pyparsing deprecation warnings did not prevent execution. Private executed notebooks, raw outputs and diagnostic arrays are retained outside the repository; no downloaded dataset or checkpoint is committed. The exact cause of the user's failed Colab installation remains unconfirmed. See [environment setup and recovery](ENVIRONMENT_SETUP.md).
+
+---
+
 ## Presentation-only update — 2026-10-18
 
 Baseline: `edbb5ce0a4889f9807c75f1b068ec1495d61b3a4`, retained in Git history.
