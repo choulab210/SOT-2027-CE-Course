@@ -52,3 +52,9 @@ The six figures are provided in PNG and SVG. The results directory contains publ
 ## Citation and attribution
 
 Please cite Chen et al. (2025), *Journal of Hazardous Materials* 496, 139353, https://doi.org/10.1016/j.jhazmat.2025.139353, and acknowledge the [Micro-Nanoplastics repository](https://github.com/choulab210/Micro-Nanoplastics). For these educational materials, acknowledge Wei-Chun Chou and SOT 2027 CE Course contributors, link to this repository, and identify modifications. Retain applicable license notices.
+
+## Notebook organization
+
+**Part 0. Environment Setup and Data Preparation (Run Once)** groups package installation (0.1), supporting functions (0.2), and verified dataset download/preparation (0.3). Run it before the teaching steps; it does not pretrain the nanoparticle source model. The dataset output shows total/train/test counts and class distributions.
+
+**Part 1. Hands-On Transfer Learning Tutorial** contains the five slide-aligned steps. Code, figures, settings and scientific limitations are preserved. The helper cell requests hidden source through Colab form metadata and a `#@title` comment; use Show code to inspect it. Other notebook viewers may render it differently. See [verification](VERIFICATION_REPORT.md) for the actual browser and execution checks.
