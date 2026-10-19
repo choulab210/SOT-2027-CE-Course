@@ -1,0 +1,18 @@
+{
+  "python": "3.13.3",
+  "seed": 42,
+  "device": "cpu",
+  "packages": {
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.0",
+    "matplotlib": "3.11.1"
+  },
+  "overlap": {
+    "Reference DOI": 10,
+    "Particle ID": 12,
+    "Article ID": 10,
+    "identical_feature_vectors": 2
+  }
+}

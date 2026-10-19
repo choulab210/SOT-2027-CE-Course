@@ -1,0 +1,7 @@
+model,partition,roc_auc
+Transfer Learning,train,0.8952380952380953
+Transfer Learning,test,0.8666666666666668
+Scratch DNN,train,0.9428571428571428
+Scratch DNN,test,0.7733333333333334
+Random Forest,train,0.9987301587301588
+Random Forest,test,0.7999999999999999

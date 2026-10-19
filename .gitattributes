@@ -1,0 +1,5 @@
+# Preserve validated CSV bytes across platforms; generated SVG paths contain harmless spaces.
+* text=auto eol=lf
+*.csv -text
+*.png binary
+*.svg -whitespace
