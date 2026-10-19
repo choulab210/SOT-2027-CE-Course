@@ -1,5 +1,20 @@
 # Verification report
 
+## Notebook figure simplification — 2026-10-19
+
+Baseline: `62a31ac3aa6daa53c1638ec97fdf4378b7cbf10f`. Removed only the four conceptual image displays, their setup generation call, unused conceptual drawing helpers/imports/constants, and the unused combined figure-generation wrapper from the notebook. Step 5 retains the same two evaluation plots. All conceptual PNG/SVG files and reusable source modules remain unchanged in the repository. Brief explanations, expected outputs, cell IDs/positions and helper-collapse metadata are preserved. README and slide alignment now distinguish slide-only conceptual assets from notebook evaluation plots.
+
+**Full local verification: PASS.** All eight code cells, including all five teaching steps, executed sequentially in a fresh CPU kernel and empty working directory using the original pinned environment: Python 3.13.3, PyTorch 2.13.0, NumPy 2.4.6, pandas 2.3.3, scikit-learn 1.9.0 and matplotlib 3.11.1 on Windows 11. Both inputs were downloaded anew and passed their unchanged SHA-256 checks. Strict checkpoint loading, frozen/trainable counts, all 50 fine-tuning epochs, unchanged shared tensors and updated head tensors passed. No source-model pretraining occurred.
+
+- All 300 probabilities matched the saved reference exactly (maximum absolute difference 0.0); classifications and recalculated AUC, balanced accuracy and MCC matched.
+- Test ROC-AUC: RF 0.800000; scratch DNN 0.773333; TL 0.866667. Values were computed from predictions, not hard-coded.
+- Steps 1–4 emitted no image outputs. No conceptual figure files were generated. Step 5 emitted exactly two image outputs and exported two PNGs (4800×2700) and two valid SVGs. ROC coordinates/areas and chart values matched prediction-derived metrics.
+- Notebook schema validation and all five existing environment regression tests passed. The setup made no package changes. Source modules, requirements, original results and all repository figure assets were unchanged.
+
+The user reported successful Colab execution of the preceding revision. This revision was verified locally; no new live Google Colab runtime execution is claimed. Private executed notebooks and generated outputs are retained outside the repository. Local Jupyter transport/shutdown warnings did not cause cell failures. Prior version-drift findings below remain applicable.
+
+---
+
 ## Colab environment fix — 2026-10-18
 
 Baseline: `e7c4bf559e4162a7d7f9132086a61588224db2e1`. Part 0.1 now validates existing imports and required operations without invoking pip. A version difference from the local pins does not trigger installation. Import/API failures stop with explicit recovery and runtime-restart instructions. The original pinned requirements and reference results are unchanged. Earlier installation claims below describe earlier notebook revisions, not this revision.

@@ -13,7 +13,7 @@ A beginner-friendly CPU tutorial based on Chen et al. (2025), *Transfer learning
 1. Click **Open in Colab** above; sign in to Google if prompted.
 2. Select **Runtime → Run all**. A CPU runtime is sufficient.
 3. Wait for dependency checks, automatic downloads and 50-epoch fine-tuning.
-4. Examine the four conceptual figures and calculated ROC-AUC results.
+4. Examine the calculated metrics, training vs. test ROC-AUC chart, and held-out ROC curves.
 
 No Google Drive mount, manual upload, paid GPU, or clone is required. Supporting functions are embedded in the notebook (the long setup cell is collapsed); the five teaching sections remain concise. Every execution creates a new output folder. Dataset and checkpoint downloads use frozen original commit `6f786a275d1598bd5a7e3bb61c125529744e7dc4` and SHA-256 verification. Colab uses its preinstalled scientific environment when imports and required interfaces work. Run all does not pip-install or replace packages. Version differences alone are not errors. If an older notebook changed packages in your session, restart before using this version; see [environment recovery](ENVIRONMENT_SETUP.md).
 
@@ -41,7 +41,7 @@ This is an educational mechanics demonstration, **not independent external valid
 
 Install [requirements.txt](requirements.txt) into a new virtual environment from a terminal before launching Jupyter, then open the notebook and Run All. The pinned file is unchanged and supports the original local reference environment; the notebook only validates imports and required interfaces. Python 3.13.3 was used for the original local publication test. Reusable definitions are in src/. The public notebook is standalone and can be tested from an otherwise empty working folder.
 
-The six figures are provided in PNG and SVG. The results directory contains publication-test predictions/metrics and the previous verified comparison baseline; these are all simplified N=100 results, not historical published-workflow outputs. No pretrained binary, raw dataset, temporary execution folder or virtual environment is committed.
+All six figures remain provided in PNG and SVG in `figures/`. The four conceptual illustrations are reserved for the SOT CE PowerPoint presentation; the notebook neither generates nor displays them. Step 5 generates and displays only the two model evaluation figures. The results directory contains publication-test predictions/metrics and the previous verified comparison baseline; these are all simplified N=100 results, not historical published-workflow outputs. No pretrained binary, raw dataset, temporary execution folder or virtual environment is committed.
 
 ## Licensing
 
@@ -57,6 +57,6 @@ Please cite Chen et al. (2025), *Journal of Hazardous Materials* 496, 139353, ht
 
 **Part 0. Environment Setup and Data Preparation (Run Once)** groups scientific environment checks (0.1), supporting functions (0.2), and verified dataset download/preparation (0.3). Run it before the teaching steps; it does not pretrain the nanoparticle source model. The dataset output shows total/train/test counts and class distributions.
 
-**Part 1. Hands-On Transfer Learning Tutorial** contains the five slide-aligned steps. Code, figures, settings and scientific limitations are preserved. The helper cell requests hidden source through Colab form metadata and a `#@title` comment; use Show code to inspect it. Other notebook viewers may render it differently. See [verification](VERIFICATION_REPORT.md) for the actual browser and execution checks.
+**Part 1. Hands-On Transfer Learning Tutorial** contains the five slide-aligned steps. Model code, settings and scientific limitations are preserved; Steps 1–4 show code and expected outputs, and Step 5 also shows the two evaluation figures. The helper cell requests hidden source through Colab form metadata and a `#@title` comment; use Show code to inspect it. Other notebook viewers may render it differently. See [verification](VERIFICATION_REPORT.md) for the actual browser and execution checks.
 
 Dependency versions can change optimization rounding and, in some cases, predictions. Consult [VERIFICATION_REPORT.md](VERIFICATION_REPORT.md) for measured comparisons; the historical reference CSVs and figures are preserved.
